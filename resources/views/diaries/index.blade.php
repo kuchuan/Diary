@@ -5,9 +5,17 @@ Diary 一覧
 @endsection
 
 @section('content')
-	<div class="m-4 p-4 border border-primary">
-		<p>ほげ</p>
-		<p>ほげほげほげ</p>
-		<p>2019/xx/yy</p>
-	</div>
+ <a href="{{ route('diary.create') }}" class ="btn btn-primary">新規投稿</a>
+	@foreach ($diaries as $diary)
+		<div class="m-4 p-4 border border-primary">
+			<p>{{ $diary['title'] }}</p>
+			<p>{{ $diary['body'] }}</p>
+			<p>{{ $diary['created_at'] }}</p>
+			<form action="{{ route('diary.destory', ['id' => $diary['id']]) }}" method="POST" class="d-inline">
+				@csrf
+				@method('delete')
+				<button class="btn btn-outline-danger"><i class="fas fa-trash-alt">：削除</i></button>
+			</form>
+		</div>
+	@endforeach
 @endsection
