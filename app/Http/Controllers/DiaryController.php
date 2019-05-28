@@ -12,7 +12,10 @@ class DiaryController extends Controller
 {
     public function index()
     {
-    	// dd('Hello Laravel');
+    	//Authクラス
+        // dd(Auth::user()->name);
+        // dd(Auth::user()->email);
+        // dd('Hello Laravel');
     	// dump and die関数というLaravelに用意された関数
     	// var_dumpとdieを組み合わせたもの
     	//Laravel開発の必須ツールです
@@ -69,6 +72,37 @@ class DiaryController extends Controller
         //DELETE FROM テーブル名 WHERE id=?
 
         return redirect()->route('diary.index');
+    }
+
+    function edit($id){
+        $diary = diary::find($id);
+        // SERECT * FROM diaries WHERE id=?
+        // $diaryはCollectionという型でできていて、Arrayに変換するにはtoArray()
+
+        return view('diaries.edit',['diary' =>$diary]);
+    }
+    function update($id, CreateDiary $request){
+        $diary = diary::find($id);//一見探してくる
+
+        // $requestがバリデーション機能付きの$_POSTみたいなもの
+        $diary->title = $request->title;//値上書き
+        $diary->body = $request->body;//
+        $diary->save(); //保存
+
+        return redirect()->route('diary.index');
+    }
+    public function  mypage(){
+        // $login_user = auth::user();
+        // // dd($login_user->id);
+        // $diaries = diary::where('user_id', 1)->get();
+        // // where('カラム名', 値)
+        // // SELECT * FROM diaries WHERE カラム名=値
+
+        // イケてるやり方
+        $login_user =  auth::user();
+        $diaries  = $login_user->diaries;
+
+        return view('diaries.mypage', ['diaries' => $diaries]);
     }
 
 }
