@@ -21,7 +21,7 @@ class DiaryController extends Controller
     	//Laravel開発の必須ツールです
 
         //モデルファイルを使ってデータを取得する
-          $diaries = Diary::all()->toArray(); 
+          $diaries = Diary::with('likes')->orderBy('id', 'desc')->get();
         //SELECT * FROM diaries WHERE 1を実行し$diariesに入れる
           // dd($diaries);
 
@@ -103,6 +103,15 @@ class DiaryController extends Controller
         $diaries  = $login_user->diaries;
 
         return view('diaries.mypage', ['diaries' => $diaries]);
+    }
+    function like($id){
+        // idを元にdiaryデータ1件取得
+        $diary = Diary::where('id', $id)->with('likes')->first();
+        // dd($diary);
+        // likesたーブルに選択されているdiaryとログインしているユーザーのidをINSERTする
+        $diary->likes()->attach(Auth::user()->id);
+        // INSERT INTO likes (diary_id, user_id) VALUES ($diary->id, Auth::user()->id)
+        return redirect()->route('diary.index');
     }
 
 }

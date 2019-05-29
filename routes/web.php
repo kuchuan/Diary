@@ -28,6 +28,8 @@ Route::get('/', 'DiaryController@index')->name('diary.index'); //追加
 		Route::delete('diary/{id}/delete', 'DiaryController@destory')->name('diary.destory'); //削除処理
 		//{}は対応するメソッドの引数になる
 		route::get('/mypage', 'DiaryController@mypage')->name('diary.mypage');
+		Route::post('diary/{id}/like', 'DiaryController@like')->name('diary.like');
+    Route::post('diary/{id}/dislike', 'DiaryController@dislike')->name('diary.dislike');
 });
 
 
