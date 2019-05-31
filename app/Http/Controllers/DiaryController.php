@@ -55,6 +55,8 @@ class DiaryController extends Controller
         $diary->title = $request->title;
         $diary->body = $request->body;
         $diary->user_id = Auth::user()->id; //追加 ログインしてるユーザーのidを保存
+        // storageフォルダに画像をアップロードする
+        $diary->img_url = $request->ing_url->store('public/diary_img');
         $diary->save(); //DBに保存
 
         //一覧ページに戻る（リダイレクト処理）
@@ -111,6 +113,13 @@ class DiaryController extends Controller
         // likesたーブルに選択されているdiaryとログインしているユーザーのidをINSERTする
         $diary->likes()->attach(Auth::user()->id);
         // INSERT INTO likes (diary_id, user_id) VALUES ($diary->id, Auth::user()->id)
+        return redirect()->route('diary.index');
+    }
+    function dislike($id){
+        $diary = Diary::where('id', $id)->with('likes')->first();
+        // dd($diary);
+        $diary->likes()->detach(auth::user()->id);
+        //DELETE FROM likes WHERE diary_id=$diary AND user_id=Auth::user()->idが発行される
         return redirect()->route('diary.index');
     }
 

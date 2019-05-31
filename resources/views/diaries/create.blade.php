@@ -15,7 +15,7 @@ Diary 新規作成
                     @endforeach
                 </ul>
                 @endif
-                <form action="{{ route('diary.create') }}" method="POST">
+                <form action="{{ route('diary.create') }}" method="POST" enctype="multpart/form-data">
                 	{{-- Laravelでフォームをを実装する場合に必須 --}}
                     @csrf
                     <div class="form-group">
@@ -25,6 +25,11 @@ Diary 新規作成
                     <div class="form-group">
                         <label for="body">本文</label>
                         <textarea class="form-control" name="body" id="body">{{ old('title') }}</textarea>
+                    </div>
+                     <div class="form-group">
+                        <label for="img_url">画像</label>
+                        {{-- <textarea class="form-control" name="body" id="body">{{ old('title') }}</textarea> --}}
+                        <input type="file" name="img_url" class="form-control" id="img_url">
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">投稿</button>
