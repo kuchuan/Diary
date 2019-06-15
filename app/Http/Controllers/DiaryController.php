@@ -33,7 +33,6 @@ class DiaryController extends Controller
     	//＊ファイル名は.bladeの前のみ
     	//例）view('welcome')
     	//例）view('daiaries.edit')
-        //＊ファイル名は.bladeは
         //
     }
 
@@ -44,7 +43,7 @@ class DiaryController extends Controller
 
     public function store(CreateDiary $request){
         //保存処理
-        //POST送信のデータの受け取り（以前はS_POSTで受けていた）
+        //POST送信のデータの受け取り（以前は$_POSTで受けていた）
         //Laravelでは＄_POSTの代わりにRequestクラスを使う
         // dd($request);
         // INSERT INTO テーブル名 (colum名) VALUE (値)
@@ -56,6 +55,10 @@ class DiaryController extends Controller
         $diary->body = $request->body;
         $diary->user_id = Auth::user()->id; //追加 ログインしてるユーザーのidを保存
         // storageフォルダに画像をアップロードする
+
+        // ランダムな文字列で画像名を設定
+        // 選択された画像をstrage/app/public/diary_imgにアップロード
+        // 画像名を残す
         $diary->img_url = $request->ing_url->store('public/diary_img');
         $diary->save(); //DBに保存
 

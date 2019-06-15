@@ -24,7 +24,7 @@ Diary 新規作成
                     </div>
                     <div class="form-group">
                         <label for="body">本文</label>
-                        <textarea class="form-control" name="body" id="body">{{ old('title') }}</textarea>
+                        <textarea class="form-control" name="body" id="body">{{ old('body') }}</textarea>
                     </div>
                      <div class="form-group">
                         <label for="img_url">画像</label>

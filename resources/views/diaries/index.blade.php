@@ -30,8 +30,8 @@ Diary 一覧
 		@endif
 		{{-- いいね機能まわりの表示 --}}
 		{{-- <div class="mt-3 ml-3"> --}}
-			@if(auth::check() && $diary->likes->contains(function($user){
-				return $user->id == auth::user()->id;
+			@if(Auth::check() && $diary->likes->contains(function($user){
+				return $user->id == Auth::user()->id;
 			}))
 				{{-- おおねされていたら、いいねを取り消すぼたんを設置 --}}
 			<form style="display: inline;" method="POST" action="{{ route('diary.dislike', ['id' => $diary['id']])}}">
